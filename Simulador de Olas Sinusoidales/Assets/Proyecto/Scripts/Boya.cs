@@ -1,11 +1,5 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Simula la flotabilidad de una boya sobre las olas (Sinusoidal o Gerstner).
-/// Fórmula: F = ρ * g * V_desplazado
-/// donde V_desplazado depende de cuánto está sumergido el objeto.
-/// Ajusta el drag y la masa automáticamente según el modo de ola activo.
-/// </summary>
 public class Boya : MonoBehaviour
 {
     [Header("Referencias")]
@@ -13,19 +7,20 @@ public class Boya : MonoBehaviour
     public GerstnerWave gerstnerWave;
 
     [Header("Física de flotabilidad")]
-    public float waterDensity = 1000f;  // ρ: densidad del agua (kg/m³)
-    public float objectVolume = 0.5f;   // Volumen total del objeto (m³)
+    public float waterDensity = 1000f;
+    public float objectVolume = 0.5f;
 
+    //Ponemos esto porque sino en las olas de Gerstner se nos va la boya al cielo
     [Header("Masa por modo")]
-    public float objectMassSinusoidal = 100f;    // Masa para sinusoidal (kg)
-    public float objectMassGerstner = 1000f;   // Masa para Gerstner (kg)
+    public float objectMassSinusoidal = 100f;
+    public float objectMassGerstner = 1000f;
 
+    //Lo mismo
     [Header("Drag por modo")]
-    public float dragSinusoidal = 16f;   // Drag calibrado para sinusoidal
-    public float dragGerstner = 35f;   // Drag mayor para Gerstner (olas más agresivas)
+    public float dragSinusoidal = 16f;
+    public float dragGerstner = 35f;
 
-    [Header("Tamaño del objeto")]
-    public float objectHeight = 1f;     // Altura total del objeto
+    private float objectHeight = 1f;
 
     private Rigidbody rb;
     private const float gravity = 9.81f;
@@ -52,9 +47,6 @@ public class Boya : MonoBehaviour
         ApplyBuoyancy(waterHeight, activeDrag);
     }
 
-    /// <summary>
-    /// Sincroniza la masa del Rigidbody con el modo de ola activo.
-    /// </summary>
     void UpdatePhysicsParams()
     {
         if (gerstnerWave != null && gerstnerWave.isActive)
@@ -77,9 +69,6 @@ public class Boya : MonoBehaviour
         return 0f;
     }
 
-    /// <summary>
-    /// Devuelve el drag correspondiente al modo activo.
-    /// </summary>
     float GetActiveDrag()
     {
         if (gerstnerWave != null && gerstnerWave.isActive)

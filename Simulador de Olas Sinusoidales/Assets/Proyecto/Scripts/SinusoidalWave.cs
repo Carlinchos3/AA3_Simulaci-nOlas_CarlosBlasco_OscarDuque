@@ -1,22 +1,17 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Simula olas sinusoidales modificando SOLO la coordenada Y de los vértices.
-/// Fórmula: y = A * sin((2π/L) * (x - v*t) + φ)
-/// Adjuntar al mismo GameObject que WaterMeshGenerator.
-/// </summary>
 [RequireComponent(typeof(WaterMeshGenerator))]
 public class SinusoidalWave : MonoBehaviour
 {
     [System.Serializable]
     public class WaveParams
     {
-        public float amplitude = 0.5f;   // A: altura de la ola
-        public float wavelength = 5f;     // L: longitud de onda
-        public float speed = 1.5f;   // v: velocidad de propagación
-        public float phase = 0f;     // φ: desfase inicial
+        public float amplitude = 0.5f;
+        public float wavelength = 5f;
+        public float speed = 1.5f;
+        public float phase = 0f;
         [Range(0f, 360f)]
-        public float directionAngle = 0f; // Dirección en grados (0 = eje X)
+        public float directionAngle = 0f;
     }
 
     [Header("Parámetros de olas (puedes añadir varias)")]
@@ -54,7 +49,7 @@ public class SinusoidalWave : MonoBehaviour
             float x = baseVerts[i].x;
             float z = baseVerts[i].z;
 
-            // Resetear Y a la posición base
+            // Resetear Y a la posición original
             float y = 0f;
 
             // Sumar contribución de cada ola
@@ -79,10 +74,7 @@ public class SinusoidalWave : MonoBehaviour
 
         waterMesh.ApplyVertices();
     }
-    /// <summary>
-    /// Devuelve la altura del agua en una posición XZ del mundo.
-    /// Usado por la boya para calcular flotabilidad.
-    /// </summary>
+
     public float GetWaterHeight(float worldX, float worldZ)
     {
         float t = Time.time;

@@ -1,16 +1,11 @@
 using UnityEngine;
 
-/// <summary>
-/// Genera una malla plana procedural que servirá de base para
-/// las simulaciones de olas sinusoidal y de Gerstner.
-/// Adjuntar a un GameObject vacío con MeshFilter y MeshRenderer.
-/// </summary>
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class WaterMeshGenerator : MonoBehaviour
 {
     [Header("Dimensiones de la malla")]
-    public int resolution = 60;       // Vértices por lado (más = más detalle)
-    public float size = 20f;          // Tamaño total en unidades de Unity
+    public int resolution = 60;
+    public float size = 20f;
 
     // Referencia pública para que los scripts de olas accedan
     [HideInInspector] public Mesh mesh;
@@ -79,9 +74,6 @@ public class WaterMeshGenerator : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    /// <summary>
-    /// Llama esto desde los scripts de olas después de modificar el array vertices[].
-    /// </summary>
     public void ApplyVertices()
     {
         mesh.vertices = vertices;

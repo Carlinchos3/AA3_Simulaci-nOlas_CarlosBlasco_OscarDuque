@@ -2,10 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// Controla la UI para alternar entre simulación Sinusoidal y Gerstner.
-/// Gestiona que solo una simulación esté activa a la vez.
-/// </summary>
 public class WaveUIController : MonoBehaviour
 {
     [Header("Referencias a simulaciones")]
@@ -22,7 +18,6 @@ public class WaveUIController : MonoBehaviour
         // Estado inicial: sinusoidal activa, Gerstner inactiva
         SetSinusoidal(true);
 
-        // Listeners de los toggles
         sinusoidalToggle.onValueChanged.AddListener(OnSinusoidalToggle);
         gerstnerToggle.onValueChanged.AddListener(OnGerstnerToggle);
 
@@ -65,10 +60,6 @@ public class WaveUIController : MonoBehaviour
         UpdateLabel();
     }
 
-    /// <summary>
-    /// Resetea los vértices al cambiar de simulación para evitar
-    /// artefactos visuales por posiciones residuales.
-    /// </summary>
     void ResetMesh()
     {
         WaterMeshGenerator water = sinusoidalWave.GetComponent<WaterMeshGenerator>();

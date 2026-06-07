@@ -1,33 +1,22 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Simula olas de Gerstner modificando las coordenadas X, Y y Z de los vértices.
-/// A diferencia de la sinusoidal, desplaza horizontalmente los vértices,
-/// creando crestas más puntiagudas y realistas.
-/// 
-/// Fórmulas:
-///   x' = x + (Q * A) * D.x * cos(k * dot(D,P) - w*t + φ)
-///   z' = z + (Q * A) * D.z * cos(k * dot(D,P) - w*t + φ)
-///   y' =       A         * sin(k * dot(D,P) - w*t + φ)
-/// 
-/// Adjuntar al mismo GameObject que WaterMeshGenerator.
-/// </summary>
 [RequireComponent(typeof(WaterMeshGenerator))]
 public class GerstnerWave : MonoBehaviour
 {
     [System.Serializable]
     public class WaveParams
     {
-        public float amplitude = 0.5f;   // A: altura de la ola
-        public float wavelength = 5f;     // L: longitud de onda
-        public float speed = 1.5f;   // v: velocidad de propagación
-        public float phase = 0f;     // φ: desfase inicial
+        public float amplitude = 0.5f;
+        public float wavelength = 5f;
+        public float speed = 1.5f;
+        public float phase = 0f;
         [Range(0f, 1f)]
-        public float steepness = 0.5f;   // Q: controla la agudeza de la cresta (0=sinusoidal, 1=máx Gerstner)
+        public float steepness = 0.5f;
         [Range(0f, 360f)]
-        public float directionAngle = 0f;    // Dirección en grados
+        public float directionAngle = 0f;
     }
 
+    //valor de las olas, luego las hemos ido modificando hasta conseguir el resultado correcto
     [Header("Parámetros de olas")]
     public WaveParams[] waves = new WaveParams[]
     {
@@ -36,8 +25,9 @@ public class GerstnerWave : MonoBehaviour
         new WaveParams { amplitude = 0.15f, wavelength = 4f, speed = 1.8f, phase = 0.8f, steepness = 0.3f, directionAngle = -30f }
     };
 
+    // Empieza desactivado para no tener las dos avtivas a la vez. con la UI lo controlas
     [Header("Control")]
-    public bool isActive = false; // Empieza desactivado; la UI lo controla
+    public bool isActive = false;
 
     private WaterMeshGenerator waterMesh;
 
@@ -98,11 +88,6 @@ public class GerstnerWave : MonoBehaviour
         waterMesh.ApplyVertices();
     }
 
-    /// <summary>
-    /// Devuelve la altura del agua en una posición XZ del mundo.
-    /// Usado por la boya. Nota: usa posición base como aproximación
-    /// (iteración completa sería costosa para la boya).
-    /// </summary>
     public float GetWaterHeight(float worldX, float worldZ)
     {
         float t = Time.time;
